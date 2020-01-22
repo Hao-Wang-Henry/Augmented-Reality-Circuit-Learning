@@ -8,7 +8,7 @@ def get_video():
     
     #address = "http://admin:admin@192.168.1.101:8081" ; locate_method = 4
     address = "video.mp4" ; locate_method = 1
-    #address = 0
+    #address = 0; locate_method = 4
 
     res = 1  #low resolution, 400*300
     #res = 2  #median resolution, 640*480
@@ -278,8 +278,11 @@ if __name__ == '__main__':
         #choose locating method from aotu, maunal, and track                    
         if locate_method == 1:
             #auto-calibrate
-            tracker, boxes = calibrate(frame, res)
-            locate_method = 2
+            try:
+                tracker, boxes = calibrate(frame, res)
+                locate_method = 2
+            except:
+                print("calibrate fail, re-calibrating")
             time = cv2.getTickCount()
         elif locate_method == 2:
             #track
